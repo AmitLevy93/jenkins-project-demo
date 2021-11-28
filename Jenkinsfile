@@ -1,3 +1,4 @@
+//CODE_CHANGES = getGitChanges() //- variable that checks if there are any code changes.
 pipline{ //- must be top-level.
 //Declaring that wer'e writing a Pipline.
     agent any //- where to execute
@@ -13,6 +14,20 @@ pipline{ //- must be top-level.
             }
         }
         stage("test"){
+            when{
+            //when should this stage will execute.
+                expression{
+                //here we find our boolian expressions, the current active branch-name in the build.
+                    BRANCH_NAME == 'master' //checks if the current branch is 'master'.
+                    //if it's not, its gonna skip.
+                    //env.BRANCH_NAME - environment variable
+                    
+                    //BRANCH_NAME == 'master' || BRANCH_NAME == 'main' //we can also check if its one of these branches.
+
+                    //BRANCH_NAME == 'master' || CODE_CHANGES == true
+                    //the variable 'CODE_CHANGES' can be defined in the first lines of the code.
+                }
+            }
             steps{
                 echo "testing the application..."
             }
@@ -23,9 +38,24 @@ pipline{ //- must be top-level.
             }
         }
     }
+    /*post{
+    //post - Execute some logic AFTER all stages executed.
+    //configures the Build Status or the Build Status Changes.
+        always{
+        //always - the script or logic insid there will
+        //be executed always, no matter if it's works or failes.
+        //For Example, if there is a need of sending a mail to a team.
+        }
+        success{
+        //success - relevant only if the build was succeeded.
+        }
+        failure{
+        //failure - relevant only if the build was failed.
+        }
+    }*/
 }
 
-//node{
+/*node{
     // equivalent to the first 2 lines: 'pipline' and 'agent any'
     //inside of it we will write a Groovy script
-//}
+}*/
