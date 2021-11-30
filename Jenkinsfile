@@ -5,7 +5,7 @@ def gv
 
 //CODE_CHANGES = getGitChanges() //- variable that checks if there are any code changes.
 
-pipline{ //- must be top-level.
+pipeline{ //- must be top-level.
 //Declaring that wer'e writing a Pipline.
     
     agent any //- where to execute
