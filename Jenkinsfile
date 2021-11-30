@@ -1,4 +1,4 @@
-//def gv
+def gv
 //Variables - we can find the whole list in the URL:
 //http://localhost:8080/env-vars.html/
 //Such as: BRANCH_NAME ...
