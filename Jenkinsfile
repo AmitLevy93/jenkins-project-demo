@@ -1,3 +1,4 @@
+//def gv
 //Variables - we can find the whole list in the URL:
 //http://localhost:8080/env-vars.html/
 //Such as: BRANCH_NAME ...
@@ -34,11 +35,19 @@ pipline{ //- must be top-level.
     }
     stages{//- where the "work" is actually heppens
     //contains all the stages and steps in the process
+        stage("init"){
+            steps{
+                script{
+                    //'script' tag is meant for running a groovy script. 
+                    gv = load "script.groovy"
+                }
+            }
+        }
         stage("build"){
             steps{
-                echo "building the application..."
-                echo "building version ${NEW_VERSION}"
-                sh "mvn install"
+                script{
+                    gv.buildApp()
+                }
             }
         }
         stage("test"){
@@ -59,20 +68,16 @@ pipline{ //- must be top-level.
                 }
             }
             steps{
-                echo "testing the application..."
+                script{
+                    gv.testApp()
+                }
             }
         }
         stage("deploy"){
             steps{
-                echo "deploying the application..."
-                //echo "deploying with ${SERVER_CREDENTIALS}" // but instead of it we can use:
-                /*withCredentials([
-                    usernamePassword(credentials: 'server-credentials', usernameVariable: USER, passwordVariable: PWD)
-                ]){
-                    sh "some script ${USER} ${PWD}"
-                }*/
-
-                echo "deploying version ${params.VERSION}"
+                script{
+                    gv.deployApp()
+                }
             }
         }
     }
