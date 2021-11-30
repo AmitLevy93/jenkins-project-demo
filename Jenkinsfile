@@ -52,7 +52,7 @@ pipeline{ //- must be top-level.
         }
         stage("test"){
             when{
-            //when should this stage will execute.
+            //when should this stage execute.
                 expression{
                 //here we find our boolian expressions, the current active branch-name in the build.
                     BRANCH_NAME == 'master' //checks if the current branch is 'master'.
